@@ -23,8 +23,8 @@ To create a project export:
 ```sh
 $ dojo export project
 
-Emit editor project bundle
-  emitted to "my-project.project.json"
+Export project bundle
+  exported to "my-project.project.json"
 ```
 
 This will export a file ending in `.project.json` which will be named after the name of your package in the `package.json` file.

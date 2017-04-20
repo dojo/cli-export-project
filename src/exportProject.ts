@@ -326,7 +326,7 @@ function setProjectIndex(project: ProjectJson, index = './src/index.html') {
 export default async function emitProject({ content, index, out, project: root, verbose }: EmitArgs) {
 	verboseFlag = verbose;
 
-	log(underline('\nEmit editor project bundle'));
+	log(underline('\nExport project bundle'));
 
 	try {
 		const initialwd = cwd();
@@ -353,7 +353,7 @@ export default async function emitProject({ content, index, out, project: root, 
 		const outfilename = `${(project.package.name || 'bundle').replace(/[\/\\]/, '-')}.project.json`;
 		const outfile = relative(cwd(), normalize(join(initialwd, out, outfilename)));
 		await setFile(outfile, JSON.stringify(project));
-		log('  ' + bold.green('emitted') + ` to "${relative(initialwd, outfile)}"\n`);
+		log('  ' + bold.green('exported') + ` to "${relative(initialwd, outfile)}"\n`);
 	}
 	catch (e) {
 		const stack: string[] = e.stack.split('\n');
