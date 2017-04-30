@@ -6,10 +6,10 @@ import { stub, spy, SinonStub, SinonSpy } from 'sinon';
 import * as fs from 'fs';
 import * as process from 'process';
 
-import { EmitArgs } from '../../src/main';
+import { ExportArgs } from '../../src/main';
 import { ProjectFileType } from '../../src/interfaces/project.json';
 
-let exportProject: (args: EmitArgs) => Promise<void>;
+let exportProject: (args: ExportArgs) => Promise<void>;
 let accessStub: SinonStub;
 let readFileStub: SinonStub;
 let writeFileStub: SinonStub;
@@ -18,7 +18,7 @@ let cwdStub: SinonStub;
 let consoleLogStub: SinonStub;
 let globStub: SinonSpy;
 let resolveStub: SinonStub;
-let emitArgs: any;
+let exportArgs: any;
 let accessMap: { [filename: string]: boolean };
 let readFileMap: { [filename: string]: string };
 let globMap: { [pattern: string]: string[] };
@@ -108,7 +108,7 @@ registerSuite({
 
 		consolelogStack = [];
 
-		emitArgs = {
+		exportArgs = {
 			content: undefined,
 			out: '.',
 			project: '.',
@@ -145,8 +145,8 @@ registerSuite({
 		resolveStub.reset();
 	},
 
-	async 'emits a project bundle with default arguments'() {
-		await exportProject(emitArgs);
+	async 'exports a project bundle with default arguments'() {
+		await exportProject(exportArgs);
 		assert.strictEqual(consoleLogStub.callCount, 2);
 		assert.strictEqual(writeFileStub.callCount, 1, 'project should have been written');
 		assert.strictEqual(writeFileStub.lastCall.args[0], 'test-package.project.json', 'should have written expected filename');
@@ -167,7 +167,7 @@ registerSuite({
 		accessMap['.dojorc'] = true;
 		readFileMap['.dojorc'] = JSON.stringify(dojorc);
 
-		await exportProject(emitArgs);
+		await exportProject(exportArgs);
 
 		assert.deepEqual(JSON.parse(writeFileStub.lastCall.args[1]), {
 			dependencies: { development: {}, production: {} },
@@ -189,7 +189,7 @@ registerSuite({
 		});
 		readFileMap['node_modules/typescript/lib/lib.foo.d.ts'] = 'foo';
 		readFileMap['node_modules/typescript/lib/lib.bar.d.ts'] = 'bar';
-		await exportProject(emitArgs);
+		await exportProject(exportArgs);
 		assert.deepEqual(JSON.parse(writeFileStub.lastCall.args[1]), {
 			dependencies: { development: {}, production: {} },
 			environmentFiles: [
@@ -215,7 +215,7 @@ registerSuite({
 			},
 			include: [ 'src/**/*.ts' ]
 		});
-		await exportProject(emitArgs);
+		await exportProject(exportArgs);
 		assert.strictEqual(consoleLogStub.callCount, 3, 'should have logged a warning');
 		assert.include(consoleLogStub.getCall(1).args[0], '"node_modules/baz/package.json" does not contain type information', 'warning should include proper info');
 		assert.deepEqual(JSON.parse(writeFileStub.lastCall.args[1]), {
@@ -247,7 +247,7 @@ registerSuite({
 			'node_modules/@dojo/core/lang.d.ts',
 			'node_modules/@types/chai/assert.d.ts'
 		];
-		await exportProject(emitArgs);
+		await exportProject(exportArgs);
 		assert.strictEqual(consoleLogStub.callCount, 2, 'should have only logged twice to console');
 		assert.deepEqual(JSON.parse(writeFileStub.lastCall.args[1]), {
 			dependencies: { development: {}, production: {} },
@@ -278,7 +278,7 @@ registerSuite({
 			compilerOptions: { },
 			include: [ 'src/**/*.ts' ]
 		});
-		await exportProject(emitArgs);
+		await exportProject(exportArgs);
 		assert.strictEqual(consoleLogStub.callCount, 2, 'should have only logged twice to console');
 		assert.deepEqual(JSON.parse(writeFileStub.lastCall.args[1]), {
 			dependencies: { development: {}, production: {} },
@@ -328,7 +328,7 @@ registerSuite({
 				})
 			});
 
-			await exportProject(emitArgs);
+			await exportProject(exportArgs);
 			assert.strictEqual(consoleLogStub.callCount, 2);
 			assert.deepEqual(JSON.parse(writeFileStub.lastCall.args[1]), {
 				dependencies: { development: {
@@ -392,7 +392,7 @@ registerSuite({
 				})
 			});
 
-			await exportProject(emitArgs);
+			await exportProject(exportArgs);
 			assert.strictEqual(consoleLogStub.callCount, 2);
 			assert.deepEqual(JSON.parse(writeFileStub.lastCall.args[1]), {
 				dependencies: {
@@ -460,7 +460,7 @@ registerSuite({
 				})
 			});
 
-			await exportProject(emitArgs);
+			await exportProject(exportArgs);
 			assert.strictEqual(consoleLogStub.callCount, 2);
 			assert.deepEqual(JSON.parse(writeFileStub.lastCall.args[1]), {
 				dependencies: {
@@ -526,7 +526,7 @@ registerSuite({
 				})
 			});
 
-			await exportProject(emitArgs);
+			await exportProject(exportArgs);
 			assert.strictEqual(consoleLogStub.callCount, 2);
 			assert.deepEqual(JSON.parse(writeFileStub.lastCall.args[1]), {
 				dependencies: {
@@ -590,7 +590,7 @@ registerSuite({
 				})
 			});
 
-			await exportProject(emitArgs);
+			await exportProject(exportArgs);
 			assert.strictEqual(consoleLogStub.callCount, 2);
 			assert.deepEqual(JSON.parse(writeFileStub.lastCall.args[1]), {
 				dependencies: {
@@ -650,7 +650,7 @@ registerSuite({
 				})
 			});
 
-			await exportProject(emitArgs);
+			await exportProject(exportArgs);
 			assert.strictEqual(consoleLogStub.callCount, 2);
 			assert.deepEqual(JSON.parse(writeFileStub.lastCall.args[1]), {
 				dependencies: {
@@ -678,19 +678,19 @@ registerSuite({
 
 	async 'package.json does not contain a name'() {
 		readFileMap['package.json'] = '{}';
-		await exportProject(emitArgs);
+		await exportProject(exportArgs);
 		assert.strictEqual(consoleLogStub.callCount, 2, 'should have only logged twice to console');
 		assert.strictEqual(writeFileStub.lastCall.args[0], 'bundle.project.json', 'should have written expected filename');
 	},
 
 	async 'package name contains slashes'() {
 		readFileMap['package.json'] = JSON.stringify({ name: '@dojo/widget-core' });
-		await exportProject(emitArgs);
+		await exportProject(exportArgs);
 		assert.strictEqual(consoleLogStub.callCount, 2, 'should have only logged twice to console');
 		assert.strictEqual(writeFileStub.lastCall.args[0], '@dojo-widget-core.project.json', 'should have written expected filename');
 	},
 
-	'emit arguments': {
+	'export project arguments': {
 		async 'index'() {
 			globMap['src/**/*.{ts,html}'] = [
 				'src/index.ts',
@@ -700,10 +700,10 @@ registerSuite({
 				compilerOptions: { },
 				include: [ 'src/**/*.ts' ]
 			});
-			emitArgs.content = 'ts,html';
+			exportArgs.content = 'ts,html';
 
-			emitArgs.index = 'src/foo.html';
-			await exportProject(emitArgs);
+			exportArgs.index = 'src/foo.html';
+			await exportProject(exportArgs);
 			assert.strictEqual(consoleLogStub.callCount, 2, 'should have only logged twice to console');
 			assert.deepEqual(JSON.parse(writeFileStub.lastCall.args[1]), {
 				dependencies: { development: {}, production: {} },
@@ -722,15 +722,15 @@ registerSuite({
 		},
 
 		async 'out'() {
-			emitArgs.out = 'dev';
-			await exportProject(emitArgs);
+			exportArgs.out = 'dev';
+			await exportProject(exportArgs);
 			assert.strictEqual(consoleLogStub.callCount, 2, 'should have only logged twice to console');
 			assert.strictEqual(writeFileStub.lastCall.args[0], 'dev/test-package.project.json', 'should have written to proper path');
 		},
 
 		async 'project'() {
-			emitArgs.project = '../other-project';
-			await exportProject(emitArgs);
+			exportArgs.project = '../other-project';
+			await exportProject(exportArgs);
 			assert.strictEqual(consoleLogStub.callCount, 2, 'should have only logged twice to console');
 			assert.strictEqual(process.cwd(), '/var/projects/other-project', 'current working directory was changed');
 		},
@@ -744,8 +744,8 @@ registerSuite({
 				compilerOptions: { },
 				include: [ 'src/**/*.ts' ]
 			});
-			emitArgs.content = 'ts,html';
-			await exportProject(emitArgs);
+			exportArgs.content = 'ts,html';
+			await exportProject(exportArgs);
 			assert.strictEqual(consoleLogStub.callCount, 2, 'should have only logged twice to console');
 			assert.deepEqual(JSON.parse(writeFileStub.lastCall.args[1]), {
 				dependencies: { development: {}, production: {} },
@@ -765,8 +765,8 @@ registerSuite({
 
 		'verbose': {
 			async 'standard args'() {
-				emitArgs.verbose = true;
-				await exportProject(emitArgs);
+				exportArgs.verbose = true;
+				await exportProject(exportArgs);
 				assert.strictEqual(consoleLogStub.callCount, 7, 'should have logged properly to console');
 			}
 		}
@@ -775,14 +775,14 @@ registerSuite({
 	'error conditions': {
 		async 'package.json missing'() {
 			accessMap['package.json'] = false;
-			await exportProject(emitArgs);
+			await exportProject(exportArgs);
 			assert.strictEqual(consoleLogStub.callCount, 3, 'should have logged properly to console');
 			assert.include(consoleLogStub.getCall(1).args[0], 'Error: Path "/var/projects/test-project" does not contain a "tsconfig.json" and "package.json".');
 		},
 
 		async 'tsconfig.json missing'() {
 			accessMap['tsconfig.json'] = false;
-			await exportProject(emitArgs);
+			await exportProject(exportArgs);
 			assert.strictEqual(consoleLogStub.callCount, 3, 'should have logged properly to console');
 			assert.include(consoleLogStub.getCall(1).args[0], 'Error: Path "/var/projects/test-project" does not contain a "tsconfig.json" and "package.json".');
 		},
@@ -794,30 +794,30 @@ registerSuite({
 				}
 			});
 			readFileMap['node_modules/typescript/lib/lib.foo.d.ts'] = 'err';
-			await exportProject(emitArgs);
+			await exportProject(exportArgs);
 			assert.strictEqual(consoleLogStub.callCount, 3, 'should have logged properly to the console');
 			assert.include(consoleLogStub.getCall(1).args[0], 'Error: file not found');
 		},
 
 		async 'error writing a file'() {
 			readFileMap['package.json'] = JSON.stringify({ name: 'err' });
-			await exportProject(emitArgs);
+			await exportProject(exportArgs);
 			assert.strictEqual(consoleLogStub.callCount, 3, 'should have logged properly to the console');
 			assert.include(consoleLogStub.getCall(1).args[0], 'Error: error writing file');
 		},
 
 		async 'error with glob'() {
 			globMap['src/**/*.{ts,html}'] = [ 'err' ];
-			emitArgs.content = 'ts,html';
-			await exportProject(emitArgs);
+			exportArgs.content = 'ts,html';
+			await exportProject(exportArgs);
 			assert.strictEqual(consoleLogStub.callCount, 3, 'should have logged properly to the console');
 			assert.include(consoleLogStub.getCall(1).args[0], 'Error: glob error');
 		},
 
 		async 'error not resolving project index'() {
 			globMap['src/**/*.{ts,html}'] = [ 'src/index.ts' ];
-			emitArgs.content = 'ts,html';
-			await exportProject(emitArgs);
+			exportArgs.content = 'ts,html';
+			await exportProject(exportArgs);
 			assert.strictEqual(consoleLogStub.callCount, 3, 'should have logged properly to the console');
 			assert.include(consoleLogStub.getCall(1).args[0], 'unable to find index "./src/index.html" in project.');
 		}
