@@ -157,6 +157,8 @@ function getProjectFileType(name: string): ProjectFileType {
 	switch (ext) {
 	case '.ts':
 		return /\.d\.ts$/.test(name) ? ProjectFileType.Definition : ProjectFileType.TypeScript;
+	case '.tsx':
+		return ProjectFileType.TypeScript;
 	case '.html':
 		return ProjectFileType.HTML;
 	case '.css':
@@ -250,7 +252,7 @@ async function addDependencies(project: ProjectJson) {
  * @param project The reference to the project bundle
  * @param includeExtensions A comma deliminated string of extensions to be included in the project files
  */
-async function addProjectFiles(project: ProjectJson, includeExtensions: string = 'ts,html,css,json,xml,md') {
+async function addProjectFiles(project: ProjectJson, includeExtensions: string = 'ts,tsx,html,css,json,xml,md') {
 	if (project.tsconfig.include) {
 		const globs = await Promise.all(
 			project.tsconfig.include

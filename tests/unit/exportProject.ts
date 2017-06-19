@@ -127,7 +127,7 @@ registerSuite({
 			'node_modules/baz/package.json': JSON.stringify({ })
 		};
 		globMap = {
-			'src/**/*.{ts,html,css,json,xml,md}': [ './src/index.html' ]
+			'src/**/*.{ts,tsx,html,css,json,xml,md}': [ './src/index.html' ]
 		};
 		resolveMap = {};
 	},
@@ -264,7 +264,7 @@ registerSuite({
 	},
 
 	async 'adds project files based on tsconfig.json'() {
-		globMap['src/**/*.{ts,html,css,json,xml,md}'] = [
+		globMap['src/**/*.{ts,tsx,html,css,json,xml,md}'] = [
 			'src/index.ts',
 			'./src/index.html',
 			'src/core.css',
@@ -272,11 +272,12 @@ registerSuite({
 			'src/config/build.xml',
 			'src/README.md',
 			'src/interfaces.d.ts',
-			'src/text.txt'
+			'src/text.txt',
+			'src/widgets/Foo.tsx'
 		];
 		readFileMap['tsconfig.json'] = JSON.stringify({
 			compilerOptions: { },
-			include: [ 'src/**/*.ts' ]
+			include: [ 'src/**/*.ts', 'src/**/*.tsx' ]
 		});
 		await exportProject(exportArgs);
 		assert.strictEqual(consoleLogStub.callCount, 2, 'should have only logged twice to console');
@@ -291,13 +292,14 @@ registerSuite({
 				{ name: 'src/config/build.xml', text: '', type: ProjectFileType.XML },
 				{ name: 'src/README.md', text: '', type: ProjectFileType.Markdown },
 				{ name: 'src/interfaces.d.ts', text: '', type: ProjectFileType.Definition },
-				{ name: 'src/text.txt', text: '', type: ProjectFileType.PlainText }
+				{ name: 'src/text.txt', text: '', type: ProjectFileType.PlainText },
+				{ name: 'src/widgets/Foo.tsx', text: '', type: ProjectFileType.TypeScript }
 			],
 			index: './src/index.html',
 			package: { name: 'test-package' },
 			tsconfig: {
 				compilerOptions: {},
-				include: [ 'src/**/*.ts' ]
+				include: [ 'src/**/*.ts', 'src/**/*.tsx' ]
 			}
 		}, 'should have written expected contents');
 	},
