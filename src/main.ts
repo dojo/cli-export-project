@@ -1,10 +1,9 @@
-import { Command, Helper, OptionsHelper } from '@dojo/cli/interfaces';
-import { Argv } from 'yargs';
+import { Command, Helper, OptionsHelper } from '@dojo/interfaces/cli';
 import { join } from 'path';
 import exportProject from './exportProject';
 const pkgDir = require('pkg-dir');
 
-export interface ExportArgs extends Argv {
+export interface ExportArgs {
 	content: string | undefined;
 	out: string;
 	index: string | undefined;
@@ -25,7 +24,7 @@ function buildNpmDependencies(): { [ pkg: string ]: string } {
 	}
 }
 
-const command: Command = {
+const command: Command<ExportArgs> = {
 	description: 'Emit a JSON file that describes the project.',
 
 	register(options: OptionsHelper) {
