@@ -32,7 +32,7 @@
     "@types/yargs": "^8.0.2",
     "glob": "^7.1.1",
     "grunt": "~1.0.1",
-    "grunt-dojo2": "beta1",
+    "grunt-dojo2": "latest",
     "intern": "^3.4.3",
     "mockery": "^1.7.0",
     "monaco-editor": "^0.8.3",
