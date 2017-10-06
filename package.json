@@ -1,6 +1,6 @@
 {
   "name": "@dojo/cli-export-project",
-  "version": "0.1.0",
+  "version": "0.1.1-pre",
   "description": "Emit a project bundle of a Dojo 2 Application",
   "private": true,
   "homepage": "http://dojotoolkit.org",
