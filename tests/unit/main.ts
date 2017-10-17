@@ -1,5 +1,6 @@
-import { beforeEach, afterEach, describe, it } from 'intern!bdd';
-import * as assert from 'intern/chai!assert';
+const { beforeEach, afterEach, describe, it } = intern.getInterface('bdd');
+const { assert } = intern.getPlugin('chai');
+
 import * as mockery from 'mockery';
 import * as sinon from 'sinon';
 
@@ -16,7 +17,7 @@ describe('main', () => {
 
 	beforeEach(() => {
 		sandbox = sinon.sandbox.create();
-		mockModule = new MockModule('../../src/main');
+		mockModule = new MockModule('../../src/main', require);
 		mockGenerateProjectJson = {
 			default: sandbox.stub().returns(Promise.resolve())
 		};
