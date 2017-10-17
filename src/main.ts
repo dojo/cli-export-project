@@ -31,7 +31,7 @@ const command: Command<ExportArgs> = {
 		options('c', {
 			alias: 'content',
 			describe: 'A comma separated list of extensions of files to include in the project files.  Defaults to ' +
-				'"ts,html,css,json,xml,md".',
+				'"ts,tsx,html,css,json,xml,md,svg,jpg,jpeg,png,gif".',
 			type: 'string'
 		});
 

@@ -127,7 +127,7 @@ registerSuite({
 			'node_modules/baz/package.json': JSON.stringify({ })
 		};
 		globMap = {
-			'src/**/*.{ts,tsx,html,css,json,xml,md}': [ './src/index.html' ]
+			'src/**/*.{ts,tsx,html,css,json,xml,md,svg,jpg,jpeg,png,gif}': [ './src/index.html' ]
 		};
 		resolveMap = {};
 	},
@@ -264,7 +264,7 @@ registerSuite({
 	},
 
 	async 'adds project files based on tsconfig.json'() {
-		globMap['src/**/*.{ts,tsx,html,css,json,xml,md}'] = [
+		globMap['src/**/*.{ts,tsx,html,css,json,xml,md,svg,jpg,jpeg,png,gif}'] = [
 			'src/index.ts',
 			'./src/index.html',
 			'src/core.css',
@@ -294,6 +294,41 @@ registerSuite({
 				{ name: 'src/interfaces.d.ts', text: '', type: ProjectFileType.Definition },
 				{ name: 'src/text.txt', text: '', type: ProjectFileType.PlainText },
 				{ name: 'src/widgets/Foo.tsx', text: '', type: ProjectFileType.TypeScript }
+			],
+			index: './src/index.html',
+			package: { name: 'test-package' },
+			tsconfig: {
+				compilerOptions: {},
+				include: [ 'src/**/*.ts', 'src/**/*.tsx' ]
+			}
+		}, 'should have written expected contents');
+	},
+
+	async 'load static assets based on configruation'() {
+		globMap['src/**/*.{ts,tsx,html,css,json,xml,md,svg,jpg,jpeg,png,gif}'] = [
+			'./src/index.html',
+			'src/images/foo.svg',
+			'src/images/foo.png',
+			'src/images/foo.gif',
+			'src/images/foo.jpg',
+			'src/images/foo.jpeg'
+		];
+		readFileMap['tsconfig.json'] = JSON.stringify({
+			compilerOptions: { },
+			include: [ 'src/**/*.ts', 'src/**/*.tsx' ]
+		});
+		await exportProject(exportArgs);
+		assert.strictEqual(consoleLogStub.callCount, 2, 'should have only logged twice to console');
+		assert.deepEqual(JSON.parse(writeFileStub.lastCall.args[1]), {
+			dependencies: { development: {}, production: {} },
+			environmentFiles: [],
+			files: [
+				{ name: './src/index.html', text: '', type: ProjectFileType.HTML },
+				{ name: 'src/images/foo.svg', text: '', type: ProjectFileType.SVG },
+				{ name: 'src/images/foo.png', text: '', type: ProjectFileType.PNG },
+				{ name: 'src/images/foo.gif', text: '', type: ProjectFileType.GIF },
+				{ name: 'src/images/foo.jpg', text: '', type: ProjectFileType.JPEG },
+				{ name: 'src/images/foo.jpeg', text: '', type: ProjectFileType.JPEG }
 			],
 			index: './src/index.html',
 			package: { name: 'test-package' },

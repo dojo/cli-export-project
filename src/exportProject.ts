@@ -16,6 +16,8 @@ import { indent, log, setVerbose, verbose } from './log';
  */
 const DOJO_EXCLUDE = /@dojo\/loader\/interfaces\.d\.ts$/;
 
+const DEFAULT_EXTENSIONS = 'ts,tsx,html,css,json,xml,md,svg,jpg,jpeg,png,gif';
+
 export let requireResolve = resolveCwd;
 
 export type StringMap = { [ pkg: string ]: string; };
@@ -169,6 +171,15 @@ function getProjectFileType(name: string): ProjectFileType {
 		return ProjectFileType.XML;
 	case '.md':
 		return ProjectFileType.Markdown;
+	case '.svg':
+		return ProjectFileType.SVG;
+	case '.jpg':
+	case '.jpeg':
+		return ProjectFileType.JPEG;
+	case '.png':
+		return ProjectFileType.PNG;
+	case '.gif':
+		return ProjectFileType.GIF;
 	default:
 		return ProjectFileType.PlainText;
 	}
@@ -252,7 +263,7 @@ async function addDependencies(project: ProjectJson) {
  * @param project The reference to the project bundle
  * @param includeExtensions A comma deliminated string of extensions to be included in the project files
  */
-async function addProjectFiles(project: ProjectJson, includeExtensions: string = 'ts,tsx,html,css,json,xml,md') {
+async function addProjectFiles(project: ProjectJson, includeExtensions: string = DEFAULT_EXTENSIONS) {
 	if (project.tsconfig.include) {
 		const globs = await Promise.all(
 			project.tsconfig.include
