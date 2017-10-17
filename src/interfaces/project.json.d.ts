@@ -80,5 +80,9 @@ export const enum ProjectFileType {
 	JSON,
 	XML,
 	SourceMap,
-	PlainText
+	PlainText,
+	SVG,
+	PNG,
+	JPEG,
+	GIF
 }
