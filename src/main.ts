@@ -1,4 +1,4 @@
-import { Command, Helper, OptionsHelper } from '@dojo/cli/interfaces';
+import { Command, Helper, OptionsHelper } from '@dojo/interfaces/cli';
 import { join } from 'path';
 import exportProject from './exportProject';
 const pkgDir = require('pkg-dir');
