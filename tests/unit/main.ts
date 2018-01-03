@@ -8,7 +8,6 @@ import * as fs from 'fs';
 import MockModule from '../support/MockModule';
 
 describe('main', () => {
-
 	let moduleUnderTest: any;
 	let mockModule: MockModule;
 	let mockGenerateProjectJson: any;
@@ -36,20 +35,20 @@ describe('main', () => {
 		moduleUnderTest.register(options);
 
 		let untestedArguments: { [key: string]: string } = {
-			'c': 'content',
-			'i': 'index',
-			'o': 'out',
-			'p': 'project',
-			'v': 'verbose'
+			c: 'content',
+			i: 'index',
+			o: 'out',
+			p: 'project',
+			v: 'verbose'
 		};
 
 		for (let i = 0; i < options.callCount; i++) {
 			const call = options.getCall(i);
 
-			assert.isTrue(call.args[ 0 ] in untestedArguments);
-			assert.strictEqual(call.args[ 1 ].alias, untestedArguments[ call.args[ 0 ] ]);
+			assert.isTrue(call.args[0] in untestedArguments);
+			assert.strictEqual(call.args[1].alias, untestedArguments[call.args[0]]);
 
-			delete untestedArguments[ call.args[ 0 ] ];
+			delete untestedArguments[call.args[0]];
 		}
 
 		assert.isTrue(Object.keys(untestedArguments).length === 0, 'Not all commands are tested');
@@ -64,10 +63,17 @@ describe('main', () => {
 		};
 
 		const runTestArgs = { testArg: 'value' };
-		return moduleUnderTest.run(<any> helper, <any> runTestArgs).then(() => {
+		return moduleUnderTest.run(<any>helper, <any>runTestArgs).then(() => {
 			assert.isFalse(helper.command.run.calledOnce, 'Should not have called the command helper');
-			assert.isTrue(mockGenerateProjectJson.default.calledOnce, 'Should have called the GenerateProjectJson module');
-			assert.deepEqual(mockGenerateProjectJson.default.firstCall.args, [ runTestArgs ], 'Didn\'t run tests with provided arguments');
+			assert.isTrue(
+				mockGenerateProjectJson.default.calledOnce,
+				'Should have called the GenerateProjectJson module'
+			);
+			assert.deepEqual(
+				mockGenerateProjectJson.default.firstCall.args,
+				[runTestArgs],
+				"Didn't run tests with provided arguments"
+			);
 		});
 	});
 
@@ -86,8 +92,8 @@ describe('main', () => {
 		assert.isTrue('npm' in result, 'expecting npm property');
 		assert.isTrue('devDependencies' in result.npm, 'expecting a devDependencies property');
 		assert.deepEqual(result.npm.devDependencies, {
-			'dep1': 'dep1v',
-			'dep2': 'dep2v'
+			dep1: 'dep1v',
+			dep2: 'dep2v'
 		});
 	});
 
@@ -97,8 +103,7 @@ describe('main', () => {
 		try {
 			moduleUnderTest.eject({});
 			assert.fail('Should not have succeeded');
-		}
-		catch (e) {
+		} catch (e) {
 			assert.equal(e.message, 'Failed reading dependencies from "package.json" - test error');
 		}
 	});

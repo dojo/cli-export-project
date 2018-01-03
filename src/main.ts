@@ -11,15 +11,14 @@ export interface ExportArgs {
 	verbose: boolean;
 }
 
-function buildNpmDependencies(): { [ pkg: string ]: string } {
+function buildNpmDependencies(): { [pkg: string]: string } {
 	try {
 		const packagePath = pkgDir.sync(__dirname);
 		const packageJsonFilePath = join(packagePath, 'package.json');
-		const packageJson = <any> require(packageJsonFilePath);
+		const packageJson = <any>require(packageJsonFilePath);
 
 		return packageJson.dependencies;
-	}
-	catch (e) {
+	} catch (e) {
 		throw new Error('Failed reading dependencies from "package.json" - ' + e.message);
 	}
 }
@@ -30,14 +29,16 @@ const command: Command<ExportArgs> = {
 	register(options: OptionsHelper) {
 		options('c', {
 			alias: 'content',
-			describe: 'A comma separated list of extensions of files to include in the project files.  Defaults to ' +
+			describe:
+				'A comma separated list of extensions of files to include in the project files.  Defaults to ' +
 				'"ts,html,css,json,xml,md".',
 			type: 'string'
 		});
 
 		options('i', {
 			alias: 'index',
-			describe: 'A file path to the main HTML document to load when running the project.  Defaults to ' +
+			describe:
+				'A file path to the main HTML document to load when running the project.  Defaults to ' +
 				'"./src/index.html".'
 		});
 

@@ -2,9 +2,9 @@
  * A person who has been involved in creating or maintaining this package
  */
 export interface Person {
-	'name': string;
-	'url'?: string;
-	'email'?: string;
+	name: string;
+	url?: string;
+	email?: string;
 	[k: string]: any;
 }
 export type ScriptsPublishAfter = string;
@@ -25,273 +25,275 @@ export interface CoreProperties {
 	/**
 	 * The name of the package.
 	 */
-	'name'?: string;
+	name?: string;
 	/**
 	 * Version must be parseable by node-semver, which is bundled with npm as a dependency.
 	 */
-	'version'?: string;
+	version?: string;
 	/**
 	 * This helps people discover your package, as it's listed in 'npm search'.
 	 */
-	'description'?: string;
+	description?: string;
 	/**
 	 * This helps people discover your package as it's listed in 'npm search'.
 	 */
-	'keywords'?: string[];
+	keywords?: string[];
 	/**
 	 * The url to the project homepage.
 	 */
-	'homepage'?: string;
+	homepage?: string;
 	/**
 	 * The url to your project's issue tracker and / or the email address to which issues should be reported. These are helpful for people who encounter issues with your package.
 	 */
-	'bugs'?: {
+	bugs?: {
 		/**
 		 * The url to your project's issue tracker.
 		 */
-		'url'?: string;
+		url?: string;
 		/**
 		 * The email address to which issues should be reported.
 		 */
-		'email'?: string;
+		email?: string;
 		[k: string]: any;
 	};
 	/**
 	 * You should specify a license for your package so that people know how they are permitted to use it, and any restrictions you're placing on it.
 	 */
-	'license'?: string;
+	license?: string;
 	/**
 	 * You should specify a license for your package so that people know how they are permitted to use it, and any restrictions you're placing on it.
 	 */
-	'licenses'?: {
-		'type'?: string;
-		'url'?: string;
+	licenses?: {
+		type?: string;
+		url?: string;
 		[k: string]: any;
 	}[];
 	/**
 	 * A person who has been involved in creating or maintaining this package
 	 */
-	'author'?: Person;
+	author?: Person;
 	/**
 	 * A list of people who contributed to this package.
 	 */
-	'contributors'?: Person[];
+	contributors?: Person[];
 	/**
 	 * A list of people who maintains this package.
 	 */
-	'maintainers'?: Person[];
+	maintainers?: Person[];
 	/**
 	 * The 'files' field is an array of files to include in your project. If you name a folder in the array, then it will also include the files inside that folder.
 	 */
-	'files'?: string[];
+	files?: string[];
 	/**
 	 * The main field is a module ID that is the primary entry point to your program.
 	 */
-	'main'?: string;
-	'bin'?: {
+	main?: string;
+	bin?: {
 		[k: string]: string;
 	};
 	/**
 	 * Specify either a single file or an array of filenames to put in place for the man program to find.
 	 */
-	'man'?: any[] | string;
-	'directories'?: {
+	man?: any[] | string;
+	directories?: {
 		/**
 		 * If you specify a 'bin' directory, then all the files in that folder will be used as the 'bin' hash.
 		 */
-		'bin'?: string;
+		bin?: string;
 		/**
 		 * Put markdown files in here. Eventually, these will be displayed nicely, maybe, someday.
 		 */
-		'doc'?: string;
+		doc?: string;
 		/**
 		 * Put example scripts in here. Someday, it might be exposed in some clever way.
 		 */
-		'example'?: string;
+		example?: string;
 		/**
 		 * Tell people where the bulk of your library is. Nothing special is done with the lib folder in any way, but it's useful meta info.
 		 */
-		'lib'?: string;
+		lib?: string;
 		/**
 		 * A folder that is full of man pages. Sugar to generate a 'man' array by walking the folder.
 		 */
-		'man'?: string;
-		'test'?: string;
+		man?: string;
+		test?: string;
 		[k: string]: any;
 	};
 	/**
 	 * Specify the place where your code lives. This is helpful for people who want to contribute.
 	 */
-	'repository'?: {
-		'type'?: string;
-		'url'?: string;
+	repository?: {
+		type?: string;
+		url?: string;
 		[k: string]: any;
 	};
 	/**
 	 * The 'scripts' member is an object hash of script commands that are run at various times in the lifecycle of your package. The key is the lifecycle event, and the value is the command to run at that point.
 	 */
-	'scripts'?: {
+	scripts?: {
 		/**
 		 * Run BEFORE the package is published (Also run on local npm install without any arguments)
 		 */
-		'prepublish'?: string;
+		prepublish?: string;
 		/**
 		 * Run AFTER the package is published
 		 */
-		'publish'?: ScriptsPublishAfter;
+		publish?: ScriptsPublishAfter;
 		/**
 		 * Run AFTER the package is published
 		 */
-		'postpublish'?: ScriptsPublishAfter;
+		postpublish?: ScriptsPublishAfter;
 		/**
 		 * Run BEFORE the package is installed
 		 */
-		'preinstall'?: string;
+		preinstall?: string;
 		/**
 		 * Run AFTER the package is installed
 		 */
-		'install'?: ScriptsInstallAfter;
+		install?: ScriptsInstallAfter;
 		/**
 		 * Run AFTER the package is installed
 		 */
-		'postinstall'?: ScriptsInstallAfter;
+		postinstall?: ScriptsInstallAfter;
 		/**
 		 * Run BEFORE the package is uninstalled
 		 */
-		'preuninstall'?: ScriptsUninstallBefore;
+		preuninstall?: ScriptsUninstallBefore;
 		/**
 		 * Run BEFORE the package is uninstalled
 		 */
-		'uninstall'?: ScriptsUninstallBefore;
+		uninstall?: ScriptsUninstallBefore;
 		/**
 		 * Run AFTER the package is uninstalled
 		 */
-		'postuninstall'?: string;
+		postuninstall?: string;
 		/**
 		 * Run BEFORE bump the package version
 		 */
-		'preversion'?: ScriptsVersionBefore;
+		preversion?: ScriptsVersionBefore;
 		/**
 		 * Run BEFORE bump the package version
 		 */
-		'version'?: ScriptsVersionBefore;
+		version?: ScriptsVersionBefore;
 		/**
 		 * Run AFTER bump the package version
 		 */
-		'postversion'?: string;
+		postversion?: string;
 		/**
 		 * Run by the 'npm test' command
 		 */
-		'pretest'?: ScriptsTest;
+		pretest?: ScriptsTest;
 		/**
 		 * Run by the 'npm test' command
 		 */
-		'test'?: ScriptsTest;
+		test?: ScriptsTest;
 		/**
 		 * Run by the 'npm test' command
 		 */
-		'posttest'?: ScriptsTest;
+		posttest?: ScriptsTest;
 		/**
 		 * Run by the 'npm stop' command
 		 */
-		'prestop'?: ScriptsStop;
+		prestop?: ScriptsStop;
 		/**
 		 * Run by the 'npm stop' command
 		 */
-		'stop'?: ScriptsStop;
+		stop?: ScriptsStop;
 		/**
 		 * Run by the 'npm stop' command
 		 */
-		'poststop'?: ScriptsStop;
+		poststop?: ScriptsStop;
 		/**
 		 * Run by the 'npm start' command
 		 */
-		'prestart'?: ScriptsStart;
+		prestart?: ScriptsStart;
 		/**
 		 * Run by the 'npm start' command
 		 */
-		'start'?: ScriptsStart;
+		start?: ScriptsStart;
 		/**
 		 * Run by the 'npm start' command
 		 */
-		'poststart'?: ScriptsStart;
+		poststart?: ScriptsStart;
 		/**
 		 * Run by the 'npm restart' command. Note: 'npm restart' will run the stop and start scripts if no restart script is provided.
 		 */
-		'prerestart'?: ScriptsRestart;
+		prerestart?: ScriptsRestart;
 		/**
 		 * Run by the 'npm restart' command. Note: 'npm restart' will run the stop and start scripts if no restart script is provided.
 		 */
-		'restart'?: ScriptsRestart;
+		restart?: ScriptsRestart;
 		/**
 		 * Run by the 'npm restart' command. Note: 'npm restart' will run the stop and start scripts if no restart script is provided.
 		 */
-		'postrestart'?: ScriptsRestart;
+		postrestart?: ScriptsRestart;
 		[k: string]: string | undefined;
 	};
 	/**
 	 * A 'config' hash can be used to set configuration parameters used in package scripts that persist across upgrades.
 	 */
-	'config'?: any;
+	config?: any;
 	/**
 	 * Dependencies are specified with a simple hash of package name to version range. The version range is a string which has one or more space-separated descriptors. Dependencies can also be identified with a tarball or git URL.
 	 */
-	'dependencies'?: Dependency;
+	dependencies?: Dependency;
 	/**
 	 * Dependencies are specified with a simple hash of package name to version range. The version range is a string which has one or more space-separated descriptors. Dependencies can also be identified with a tarball or git URL.
 	 */
-	'devDependencies'?: Dependency;
+	devDependencies?: Dependency;
 	/**
 	 * Dependencies are specified with a simple hash of package name to version range. The version range is a string which has one or more space-separated descriptors. Dependencies can also be identified with a tarball or git URL.
 	 */
-	'optionalDependencies'?: Dependency;
+	optionalDependencies?: Dependency;
 	/**
 	 * Dependencies are specified with a simple hash of package name to version range. The version range is a string which has one or more space-separated descriptors. Dependencies can also be identified with a tarball or git URL.
 	 */
-	'peerDependencies'?: Dependency;
-	'engines'?: {
+	peerDependencies?: Dependency;
+	engines?: {
 		[k: string]: string;
 	};
-	'engineStrict'?: boolean;
+	engineStrict?: boolean;
 	/**
 	 * You can specify which operating systems your module will run on
 	 */
-	'os'?: string[];
+	os?: string[];
 	/**
 	 * If your code only runs on certain cpu architectures, you can specify which ones.
 	 */
-	'cpu'?: string[];
+	cpu?: string[];
 	/**
 	 * If your package is primarily a command-line application that should be installed globally, then set this value to true to provide a warning if it is installed locally.
 	 */
-	'preferGlobal'?: boolean;
+	preferGlobal?: boolean;
 	/**
 	 * If set to true, then npm will refuse to publish it.
 	 */
-	'private'?: boolean;
-	'publishConfig'?: any;
-	'dist'?: {
-		'shasum'?: string;
-		'tarball'?: string;
+	private?: boolean;
+	publishConfig?: any;
+	dist?: {
+		shasum?: string;
+		tarball?: string;
 		[k: string]: any;
 	};
-	'readme'?: string;
+	readme?: string;
 	[k: string]: any;
 }
 export interface JspmDefinition {
-	'jspm'?: CoreProperties;
+	jspm?: CoreProperties;
 	[k: string]: any;
 }
 export interface TypingsDefinition {
-	'typings'?: string;
-	'types'?: string;
+	typings?: string;
+	types?: string;
 	[k: string]: any;
 }
 export type BundledDependency = string[];
-export type JsonSchemaForNpmPackageJsonFiles = CoreProperties & JspmDefinition & TypingsDefinition & {
-	/**
-	 * Array of package names that will be bundled when publishing the package.
-	 */
-	'bundleDependencies'?: BundledDependency;
-	[k: string]: any;
-};
+export type JsonSchemaForNpmPackageJsonFiles = CoreProperties &
+	JspmDefinition &
+	TypingsDefinition & {
+		/**
+		 * Array of package names that will be bundled when publishing the package.
+		 */
+		bundleDependencies?: BundledDependency;
+		[k: string]: any;
+	};

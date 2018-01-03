@@ -4,7 +4,6 @@ import { JsonSchemaForTheTsLintConfigurationFiles as TslintJson } from './tslint
 import { DojoRcJson } from './dojorc';
 
 export interface ProjectJson {
-
 	/**
 	 * The package dependencies for the project, either `production` or `development`
 	 */
@@ -14,14 +13,14 @@ export interface ProjectJson {
 		 */
 		production: {
 			[pkg: string]: string;
-		},
+		};
 
 		/**
 		 * A map of development dependencies, where the package name is the key and the value is the semver of the package
 		 */
 		development: {
 			[pkg: string]: string;
-		}
+		};
 	};
 
 	/**

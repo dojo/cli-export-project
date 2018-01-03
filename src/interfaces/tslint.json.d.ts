@@ -6,7 +6,7 @@ export interface Ruledefinitions {
 	/**
 	 * Enforces vertical alignment for parameters, arguments and/or statements
 	 */
-	'align'?: (true | false | 'parameters' | 'arguments' | 'statements')[];
+	align?: (true | false | 'parameters' | 'arguments' | 'statements')[];
 	/**
 	 * Requires using either 'T[]' or 'Array<T>' for arrays
 	 */
@@ -18,7 +18,7 @@ export interface Ruledefinitions {
 	/**
 	 * Bans the use of specific functions or global methods
 	 */
-	'ban'?: boolean | any[];
+	ban?: boolean | any[];
 	/**
 	 * Enforces PascalCased class and interface names
 	 */
@@ -26,16 +26,22 @@ export interface Ruledefinitions {
 	/**
 	 * Enforces rules for single-line comments
 	 */
-	'comment-format'?: (true | false | 'check-space' | 'check-lowercase' | 'check-uppercase' | {
-		/**
-		 * Words that will be ignored at the beginning of comment
-		 */
-		'ignore-words'?: string[];
-		/**
-		 * RegExp pattern that will be ignored at the beginning of comment
-		 */
-		'ignore-pattern'?: string;
-	})[];
+	'comment-format'?: (
+		| true
+		| false
+		| 'check-space'
+		| 'check-lowercase'
+		| 'check-uppercase'
+		| {
+				/**
+				 * Words that will be ignored at the beginning of comment
+				 */
+				'ignore-words'?: string[];
+				/**
+				 * RegExp pattern that will be ignored at the beginning of comment
+				 */
+				'ignore-pattern'?: string;
+			})[];
 	/**
 	 * Enforces documentation for important items be filled out
 	 */
@@ -59,7 +65,7 @@ export interface Ruledefinitions {
 	/**
 	 * Enforces braces for if/for/do/while statements
 	 */
-	'curly'?: boolean;
+	curly?: boolean;
 	/**
 	 * Enforces a threshold of cyclomatic complexity
 	 */
@@ -83,7 +89,7 @@ export interface Ruledefinitions {
 	/**
 	 * Enforces the file to end with a newline
 	 */
-	'eofline'?: boolean;
+	eofline?: boolean;
 	/**
 	 * Enforces a certain header comment for all files, matched by a regular expression
 	 */
@@ -91,11 +97,11 @@ export interface Ruledefinitions {
 	/**
 	 * Enforces a for...in statement to be filtered with an if statement
 	 */
-	'forin'?: boolean;
+	forin?: boolean;
 	/**
 	 * Enforces consistent indentation levels
 	 */
-	'indent'?: (boolean | number | string)[];
+	indent?: (boolean | number | string)[];
 	/**
 	 * Enforces the rule that interface names must or must not begin with a capital 'I'
 	 */
@@ -163,7 +169,28 @@ export interface Ruledefinitions {
 	/**
 	 * Disallows access to the specified functions on console
 	 */
-	'no-console'?: (true | false | 'assert' | 'count' | 'debug' | 'dir' | 'dirxml' | 'error' | 'group' | 'groupCollapsed' | 'groupEnd' | 'info' | 'log' | 'profile' | 'profileEnd' | 'table' | 'time' | 'timeEnd' | 'timeStamp' | 'trace' | 'warn')[];
+	'no-console'?: (
+		| true
+		| false
+		| 'assert'
+		| 'count'
+		| 'debug'
+		| 'dir'
+		| 'dirxml'
+		| 'error'
+		| 'group'
+		| 'groupCollapsed'
+		| 'groupEnd'
+		| 'info'
+		| 'log'
+		| 'profile'
+		| 'profileEnd'
+		| 'table'
+		| 'time'
+		| 'timeEnd'
+		| 'timeStamp'
+		| 'trace'
+		| 'warn')[];
 	/**
 	 * Disallows access to the constructors of String, Number and Boolean
 	 */
@@ -287,7 +314,14 @@ export interface Ruledefinitions {
 	/**
 	 * Enforces the specified tokens to be on the same line as the expression preceding it
 	 */
-	'one-line'?: (true | false | 'check-open-brace' | 'check-catch' | 'check-finally' | 'check-else' | 'check-whitespace')[];
+	'one-line'?: (
+		| true
+		| false
+		| 'check-open-brace'
+		| 'check-catch'
+		| 'check-finally'
+		| 'check-else'
+		| 'check-whitespace')[];
 	/**
 	 * Disallows multiple variable definitions in the same declaration statement
 	 */
@@ -307,11 +341,11 @@ export interface Ruledefinitions {
 	/**
 	 * Enforces consistent single or double quoted string literals
 	 */
-	'quotemark'?: (true | false | 'double' | 'single' | 'jsx-double' | 'jsx-single' | 'avoid-escape')[];
+	quotemark?: (true | false | 'double' | 'single' | 'jsx-double' | 'jsx-single' | 'avoid-escape')[];
 	/**
 	 * Enforces the radix parameter of parseInt
 	 */
-	'radix'?: boolean;
+	radix?: boolean;
 	/**
 	 * When adding two variables, operands must both be of type number or of type string
 	 */
@@ -319,7 +353,7 @@ export interface Ruledefinitions {
 	/**
 	 * Enforces semicolons at the end of every statement
 	 */
-	'semicolon'?: (true | false | 'always' | 'never' | 'ignore-bound-class-methods' | 'ignore-interfaces')[];
+	semicolon?: (true | false | 'always' | 'never' | 'ignore-bound-class-methods' | 'ignore-interfaces')[];
 	/**
 	 * Enforces a default case in switch statements
 	 */
@@ -335,7 +369,15 @@ export interface Ruledefinitions {
 	/**
 	 * Enforces type definitions to exist
 	 */
-	'typedef'?: (true | false | 'call-signature' | 'parameter' | 'arrow-parameter' | 'property-declaration' | 'variable-declaration' | 'member-variable-declaration')[];
+	typedef?: (
+		| true
+		| false
+		| 'call-signature'
+		| 'parameter'
+		| 'arrow-parameter'
+		| 'property-declaration'
+		| 'variable-declaration'
+		| 'member-variable-declaration')[];
 	/**
 	 * Enforces spacing whitespace for type definitions
 	 */
@@ -351,14 +393,23 @@ export interface Ruledefinitions {
 	/**
 	 * Enforces spacing whitespace
 	 */
-	'whitespace'?: (true | false | 'check-branch' | 'check-decl' | 'check-operator' | 'check-module' | 'check-separator' | 'check-type' | 'check-typecast')[];
+	whitespace?: (
+		| true
+		| false
+		| 'check-branch'
+		| 'check-decl'
+		| 'check-operator'
+		| 'check-module'
+		| 'check-separator'
+		| 'check-type'
+		| 'check-typecast')[];
 	[k: string]: any;
 }
 export interface Jsruledefinitions {
 	/**
 	 * Enforces vertical alignment for parameters, arguments and/or statements
 	 */
-	'align'?: (true | false | 'parameters' | 'arguments' | 'statements')[];
+	align?: (true | false | 'parameters' | 'arguments' | 'statements')[];
 	/**
 	 * Requires parentheses around the parameters of arrow function definitions
 	 */
@@ -366,7 +417,7 @@ export interface Jsruledefinitions {
 	/**
 	 * Bans the use of specific functions or global methods
 	 */
-	'ban'?: boolean | any[];
+	ban?: boolean | any[];
 	/**
 	 * Enforces PascalCased class and interface names
 	 */
@@ -398,7 +449,7 @@ export interface Jsruledefinitions {
 	/**
 	 * Enforces braces for if/for/do/while statements
 	 */
-	'curly'?: boolean;
+	curly?: boolean;
 	/**
 	 * Enforces a threshold of cyclomatic complexity
 	 */
@@ -422,7 +473,7 @@ export interface Jsruledefinitions {
 	/**
 	 * Enforces the file to end with a newline
 	 */
-	'eofline'?: boolean;
+	eofline?: boolean;
 	/**
 	 * Enforces a certain header comment for all files, matched by a regular expression
 	 */
@@ -430,11 +481,11 @@ export interface Jsruledefinitions {
 	/**
 	 * Enforces a for...in statement to be filtered with an if statement
 	 */
-	'forin'?: boolean;
+	forin?: boolean;
 	/**
 	 * Enforces consistent indentation levels
 	 */
-	'indent'?: (boolean | number | string)[];
+	indent?: (boolean | number | string)[];
 	/**
 	 * Enforces basic format rules for jsdoc comments
 	 */
@@ -482,7 +533,28 @@ export interface Jsruledefinitions {
 	/**
 	 * Disallows access to the specified functions on console
 	 */
-	'no-console'?: (true | false | 'assert' | 'count' | 'debug' | 'dir' | 'dirxml' | 'error' | 'group' | 'groupCollapsed' | 'groupEnd' | 'info' | 'log' | 'profile' | 'profileEnd' | 'table' | 'time' | 'timeEnd' | 'timeStamp' | 'trace' | 'warn')[];
+	'no-console'?: (
+		| true
+		| false
+		| 'assert'
+		| 'count'
+		| 'debug'
+		| 'dir'
+		| 'dirxml'
+		| 'error'
+		| 'group'
+		| 'groupCollapsed'
+		| 'groupEnd'
+		| 'info'
+		| 'log'
+		| 'profile'
+		| 'profileEnd'
+		| 'table'
+		| 'time'
+		| 'timeEnd'
+		| 'timeStamp'
+		| 'trace'
+		| 'warn')[];
 	/**
 	 * Disallows access to the constructors of String, Number and Boolean
 	 */
@@ -578,7 +650,14 @@ export interface Jsruledefinitions {
 	/**
 	 * Enforces the specified tokens to be on the same line as the expression preceding it
 	 */
-	'one-line'?: (true | false | 'check-open-brace' | 'check-catch' | 'check-finally' | 'check-else' | 'check-whitespace')[];
+	'one-line'?: (
+		| true
+		| false
+		| 'check-open-brace'
+		| 'check-catch'
+		| 'check-finally'
+		| 'check-else'
+		| 'check-whitespace')[];
 	/**
 	 * Disallows multiple variable definitions in the same declaration statement
 	 */
@@ -598,11 +677,11 @@ export interface Jsruledefinitions {
 	/**
 	 * Enforces consistent single or double quoted string literals
 	 */
-	'quotemark'?: (true | false | 'double' | 'single' | 'jsx-double' | 'jsx-single' | 'avoid-escape')[];
+	quotemark?: (true | false | 'double' | 'single' | 'jsx-double' | 'jsx-single' | 'avoid-escape')[];
 	/**
 	 * Enforces the radix parameter of parseInt
 	 */
-	'radix'?: boolean;
+	radix?: boolean;
 	/**
 	 * When adding two variables, operands must both be of type number or of type string
 	 */
@@ -610,7 +689,7 @@ export interface Jsruledefinitions {
 	/**
 	 * Enforces semicolons at the end of every statement
 	 */
-	'semicolon'?: (true | false | 'always' | 'never' | 'ignore-bound-class-methods' | 'ignore-interfaces')[];
+	semicolon?: (true | false | 'always' | 'never' | 'ignore-bound-class-methods' | 'ignore-interfaces')[];
 	/**
 	 * Enforces a default case in switch statements
 	 */
@@ -634,19 +713,28 @@ export interface Jsruledefinitions {
 	/**
 	 * Enforces spacing whitespace
 	 */
-	'whitespace'?: (true | false | 'check-branch' | 'check-decl' | 'check-operator' | 'check-module' | 'check-separator' | 'check-type' | 'check-typecast')[];
+	whitespace?: (
+		| true
+		| false
+		| 'check-branch'
+		| 'check-decl'
+		| 'check-operator'
+		| 'check-module'
+		| 'check-separator'
+		| 'check-type'
+		| 'check-typecast')[];
 	[k: string]: any;
 }
 export interface JsonSchemaForTheTsLintConfigurationFiles {
 	/**
 	 * The directory where the codelytics rules live
 	 */
-	'rulesDirectory'?: string[];
-	'rules'?: Ruledefinitions;
-	'jsRules'?: Jsruledefinitions;
+	rulesDirectory?: string[];
+	rules?: Ruledefinitions;
+	jsRules?: Jsruledefinitions;
 	/**
 	 * Extend another configuration (built in config OR a node resolvable .json file)
 	 */
-	'extends'?: any[] | string;
+	extends?: any[] | string;
 	[k: string]: any;
 }
