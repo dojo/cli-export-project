@@ -1,5 +1,7 @@
 declare module 'resolve-cwd' {
-	module resolve { }
+	namespace resolve {
+
+	}
 	function resolve(path: string): string;
 	export = resolve;
 }

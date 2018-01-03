@@ -4,7 +4,7 @@ export let verboseFlag = false;
  * Log a message to the console
  * @param text The message to be logged
  */
-export function log(... text: any[]) {
+export function log(...text: any[]) {
 	console.log(text.join(''));
 }
 
@@ -12,11 +12,11 @@ export function log(... text: any[]) {
  * Log a message to the console if verbose messages are desired
  * @param text The message to be logged
  */
-export function verbose(... text: any[]) {
+export function verbose(...text: any[]) {
 	if (!verboseFlag) {
 		return;
 	}
-	log(... text);
+	log(...text);
 }
 
 /**
