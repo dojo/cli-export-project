@@ -41,7 +41,7 @@ export interface Ruledefinitions {
 				 * RegExp pattern that will be ignored at the beginning of comment
 				 */
 				'ignore-pattern'?: string;
-			})[];
+		  })[];
 	/**
 	 * Enforces documentation for important items be filled out
 	 */
