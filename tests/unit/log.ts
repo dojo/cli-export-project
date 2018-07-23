@@ -14,7 +14,7 @@ registerSuite('log', {
 	},
 
 	beforeEach() {
-		consoleLogStub.reset();
+		consoleLogStub.resetHistory();
 	},
 
 	afterEach() {

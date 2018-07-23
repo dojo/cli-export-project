@@ -32,7 +32,7 @@ registerSuite('exportProject', {
 			warnOnUnregistered: false
 		});
 
-		accessStub = stub(fs, 'access', (name: string, constants: any, callback: (err?: any) => void) => {
+		accessStub = stub(fs, 'access').callsFake((name: string, constants: any, callback: (err?: any) => void) => {
 			if (name in accessMap && !accessMap[name]) {
 				callback(new Error('file not found!'));
 			} else {
@@ -41,9 +41,7 @@ registerSuite('exportProject', {
 			}
 		});
 
-		readFileStub = stub(
-			fs,
-			'readFile',
+		readFileStub = stub(fs, 'readFile').callsFake(
 			(name: string, encoding: string, callback: (err?: any, data?: string) => void) => {
 				const result = (readFileMap[name] = readFileMap[name] || '');
 				if (result !== 'err') {
@@ -54,9 +52,7 @@ registerSuite('exportProject', {
 			}
 		);
 
-		writeFileStub = stub(
-			fs,
-			'writeFile',
+		writeFileStub = stub(fs, 'writeFile').callsFake(
 			(filename: string, contents: string, options: any, callback: (err?: any) => void) => {
 				if (filename === 'err.project.json') {
 					callback(new Error('error writing file'));
@@ -66,7 +62,7 @@ registerSuite('exportProject', {
 			}
 		);
 
-		chdirStub = stub(process, 'chdir', (path: string) => {
+		chdirStub = stub(process, 'chdir').callsFake((path: string) => {
 			if (path === '../other-project') {
 				cwdStub.returns('/var/projects/other-project');
 			}
@@ -85,7 +81,7 @@ registerSuite('exportProject', {
 
 		const exportProjectModule = require('../../src/exportProject');
 
-		resolveStub = stub(exportProjectModule, 'requireResolve', (mid: string) => {
+		resolveStub = stub(exportProjectModule, 'requireResolve').callsFake((mid: string) => {
 			return (resolveMap[mid] = resolveMap[mid] || '/var/projects/test-project/node_modules/' + mid);
 		});
 
@@ -105,7 +101,7 @@ registerSuite('exportProject', {
 	},
 
 	beforeEach() {
-		consoleLogStub = stub(console, 'log', (...args: any[]) => {
+		consoleLogStub = stub(console, 'log').callsFake((...args: any[]) => {
 			consolelogStack.push(args);
 		});
 
@@ -123,7 +119,7 @@ registerSuite('exportProject', {
 			'package.json': JSON.stringify({ name: 'test-package' }),
 			'tsconfig.json': JSON.stringify({ compilerOptions: {}, include: ['src/**/*.ts'] }),
 			'node_modules/@dojo/loader/dojo-loader-2.0.0.d.ts': 'loader',
-			'node_modules/@dojo/core/lang.d.ts': 'lang',
+			'node_modules/@dojo/framework/core/lang.d.ts': 'lang',
 			'node_modules/@types/chai/assert.d.ts': 'assert',
 			'node_modules/foo/package.json': JSON.stringify({ types: 'foo.d.ts' }),
 			'node_modules/bar/package.json': JSON.stringify({ typings: 'bar.d.ts' }),
@@ -138,14 +134,14 @@ registerSuite('exportProject', {
 	afterEach() {
 		consoleLogStub.restore();
 
-		accessStub.reset();
-		readFileStub.reset();
-		writeFileStub.reset();
-		chdirStub.reset();
-		cwdStub.reset();
+		accessStub.resetHistory();
+		readFileStub.resetHistory();
+		writeFileStub.resetHistory();
+		chdirStub.resetHistory();
+		cwdStub.resetHistory();
 		cwdStub.returns('/var/projects/test-project');
-		globStub.reset();
-		resolveStub.reset();
+		globStub.resetHistory();
+		resolveStub.resetHistory();
 	},
 
 	tests: {
@@ -280,7 +276,7 @@ registerSuite('exportProject', {
 			globMap['node_modules/{@dojo,@types}/**/*.d.ts'] = [
 				'node_modules/@dojo/loader/interfaces.d.ts',
 				'node_modules/@dojo/loader/dojo-loader-2.0.0.d.ts',
-				'node_modules/@dojo/core/lang.d.ts',
+				'node_modules/@dojo/framework/core/lang.d.ts',
 				'node_modules/@types/chai/assert.d.ts'
 			];
 			await exportProject(exportArgs);
@@ -295,7 +291,11 @@ registerSuite('exportProject', {
 							text: 'loader',
 							type: ProjectFileType.Definition
 						},
-						{ name: 'node_modules/@dojo/core/lang.d.ts', text: 'lang', type: ProjectFileType.Definition },
+						{
+							name: 'node_modules/@dojo/framework/core/lang.d.ts',
+							text: 'lang',
+							type: ProjectFileType.Definition
+						},
 						{
 							name: 'node_modules/@types/chai/assert.d.ts',
 							text: 'assert',
@@ -769,12 +769,12 @@ registerSuite('exportProject', {
 		},
 
 		async 'package name contains slashes'() {
-			readFileMap['package.json'] = JSON.stringify({ name: '@dojo/widget-core' });
+			readFileMap['package.json'] = JSON.stringify({ name: '@dojo/framework' });
 			await exportProject(exportArgs);
 			assert.strictEqual(consoleLogStub.callCount, 2, 'should have only logged twice to console');
 			assert.strictEqual(
 				writeFileStub.lastCall.args[0],
-				'@dojo-widget-core.project.json',
+				'@dojo-framework.project.json',
 				'should have written expected filename'
 			);
 		},
